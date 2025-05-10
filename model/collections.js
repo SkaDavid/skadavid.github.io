@@ -1,3 +1,33 @@
+class CollectionManager{
+    collections;
+    constructor(){
+        this.collections = [];
+    }
+
+    addCollection(collection){
+        this.collections.array.forEach(element => {
+            if(element.name === collections.name){
+                return -1;
+            }
+        });
+        this.collections.push(collection);
+    }
+
+    removeCollection(name){
+        let index;
+        for(let i = 0; i < this.collections.length; i++){
+            if(this.collections[i] === name){
+                index = i;
+                break;
+            }
+        }
+        if(index){
+            delete this.collections[index];
+        }
+    }
+
+}
+
 class CollectionData{
     name;
     cards;
