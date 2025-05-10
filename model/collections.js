@@ -5,12 +5,20 @@ class CollectionManager{
     }
 
     addCollection(collection){
-        this.collections.array.forEach(element => {
-            if(element.name === collections.name){
-                return -1;
-            }
-        });
-        this.collections.push(collection);
+        let collision = false;
+        if(this.collections.length !== 0){
+            this.collections.forEach(element => {
+            if(element.name === collection.name){
+                collision = true;
+                return;
+                }
+            });
+        }
+        if(!collision){
+            this.collections.push(collection);
+        } else{
+            return -1;
+        }
     }
 
     removeCollection(name){
@@ -26,17 +34,20 @@ class CollectionManager{
         }
     }
 
+    get collections(){
+        return this.collections;
+    }
 }
 
 class CollectionData{
     name;
     cards;
-    contructor(name){
-        this.name = this.name;
+    constructor(name){
+        this.name = name;
         this.cards = [];
     }
     get name(){
-        return this.title;
+        return this.name;
     }
     set name(newName){
         this.name = newName;
@@ -87,3 +98,5 @@ class CardsData{
         this.title = newText;
     }
 }
+
+export {CardsData, CollectionData, CollectionManager}

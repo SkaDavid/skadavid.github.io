@@ -17,13 +17,41 @@ class Collection{
     }
 }
 
-function renderMissingCollection (){
+function renderMissingCollection(){
     const p = document.createElement("p");
     p.innerText = "It seems like you have no collections yet. Click on the plus sign to create one!";
     return p;
 }
 
-export {Collection, renderMissingCollection}
+function newCollectionForm(closeFunction, sendFunction){
+    const background = document.createElement('div');
+    background.setAttribute("id", "darkerBackground");
+
+    const form = document.createElement("form");
+    form.setAttribute("id", "collectionForm");
+    form.addEventListener('submit', sendFunction);
+    
+    const cross = getSVG("cross");
+    cross.addEventListener('click', closeFunction);
+
+    const submit = document.createElement("input");
+    submit.setAttribute("type", "submit");
+    submit.value = "Create!";
+
+    const nameInput = document.createElement("input");
+    nameInput.type = "text";
+    nameInput.key = "name";
+
+    const text = document.createElement("p");
+    text.innerText = "Select a name for your collection:";
+
+    form.append(cross, text, nameInput, submit);
+    background.append(form);
+    return background;
+}
+
+
+export {Collection, renderMissingCollection, newCollectionForm}
 
 const svgRepo = {
     eye: `<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
@@ -36,7 +64,17 @@ const svgRepo = {
                 <svg fill="#FFFFF" width="25px" height="20px" class="bin" viewBox="0 0 48 48" data-name="Layer 1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"><title/>
                     <path d="M42,3H28a2,2,0,0,0-2-2H22a2,2,0,0,0-2,2H6A2,2,0,0,0,6,7H42a2,2,0,0,0,0-4Z"/><path d="M39,9a2,2,0,0,0-2,2V43H11V11a2,2,0,0,0-4,0V45a2,2,0,0,0,2,2H39a2,2,0,0,0,2-2V11A2,2,0,0,0,39,9Z"/>
                     <path d="M21,37V19a2,2,0,0,0-4,0V37a2,2,0,0,0,4,0Z"/><path d="M31,37V19a2,2,0,0,0-4,0V37a2,2,0,0,0,4,0Z"/>
-                </svg>`
+                </svg>`,
+    cross: `            <svg width="35px" height="35px" id="cross" viewBox="0 0 100 100">
+                <circle r="48" cx="50" cy="50" fill="none" stroke="black" stroke-width="5"></circle>
+                <line x1="30" y1="30" x2="70" y2="70" stroke="black" stroke-width="5px"></line>
+                <line x1="30" y1="70" x2="70" y2="30" stroke="black" stroke-width="5px"></line>
+            </svg>`
 }
 
-
+function getSVG(name){
+    const svg = svgRepo[name];
+    const div = document.createElement("div");
+    div.innerHTML = svg;
+    return div.firstChild.nextSibling;
+}
