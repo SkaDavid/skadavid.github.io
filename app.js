@@ -69,5 +69,22 @@ function deleteCollection(e){
 
 function lookAtCollection(e){
     e.stopPropagation();
-    console.log("look at");
+    const parentArticle = e.target.closest("article");
+    const title = parentArticle.querySelector("h3").innerText;
+    const collection = dataManager.getCollection(title);
+    console.log(collection.name);
+    const main = document.querySelector("main");
+    main.append(new Collection(collection.name).renderCards(removeCard, editCard, addCard, collection));
+}
+
+function addCard(){
+    console.log("addCard")
+}
+
+function removeCard(){
+    console.log("removeCard")
+}
+
+function editCard(){
+    console.log("editCard")
 }

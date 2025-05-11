@@ -96,6 +96,7 @@ article.aside svg.eye:hover path{
 article.aside svg.bin{
     fill: var(--second);
     transition: 300ms;
+    cursor: pointer;
     &:hover{
         fill: #eb6c18;
     }
@@ -143,6 +144,32 @@ div.svgDivide{
 }
 
 
+/* Main */
+main svg{
+    cursor: pointer;
+    &:hover{
+        fill:#eb6c18;
+        stroke: #eb6c18;
+    }
+}
+
+main .svgContainer{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+}
+
+main article{
+    border: 3px dashed var(--third);
+    padding: 10px;
+}
+
+main .cardsHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 /* Header and header animation */
 .svgText{

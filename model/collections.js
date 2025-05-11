@@ -37,6 +37,19 @@ class CollectionManager{
     get collections(){
         return this.collections;
     }
+
+    getCollection(title){
+        let returnC = -1;
+        if(this.collections.length > 0){
+            this.collections.forEach(collection => {
+            if(collection.name === title){
+                console.log(collection.name);
+                returnC = collection;
+                }
+            });
+        }
+        return returnC;
+    }
 }
 
 class CollectionData{
@@ -51,6 +64,10 @@ class CollectionData{
     }
     set name(newName){
         this.name = newName;
+    }
+
+    get cards(){
+        return this.cards;
     }
 
     addCard(card){
