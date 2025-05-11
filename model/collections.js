@@ -90,15 +90,16 @@ class CollectionData{
     }
 
     removeCard(name){
-        let index;
+        let index = -1;
         for(let i = 0; i < this.cards.length; i++){
-            if(this.cards[i] === name){
+            if(this.cards[i].title === name){
                 index = i;
                 break;
             }
         }
-        if(index){
-            delete this.cards[index];
+        if(index >= 0){
+            console.log(index);
+            this.cards.splice(index, 1);
         }
     }
 }

@@ -107,8 +107,15 @@ function sendNewCard(e){
     }
 }
 
-function removeCard(){
-    console.log("removeCard")
+function removeCard(e){
+    const parentArticle = e.target.closest("article");
+    const title = parentArticle.querySelector("h3").innerText;
+    const currentCollection = dataManager.currentCollection;
+    currentCollection.removeCard(title);
+
+    clearMain();
+    const main = document.querySelector("main");
+    main.append(new Collection(currentCollection.name).renderCards(removeCard, editCard, addCard, currentCollection));
 }
 
 function editCard(){
