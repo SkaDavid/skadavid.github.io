@@ -35,7 +35,7 @@ function refreshCollections(){
     if(collections.length !== 0){
         collections.forEach(collection => {
             const collectionArticle = new Collection(collection.name);
-            aside.append(collectionArticle.render());
+            aside.append(collectionArticle.render(deleteCollection, lookAtCollection, openCollection));
         })
     } else{
         aside.append(renderMissingCollection());
@@ -53,4 +53,21 @@ function clearSidebar(){
     if(articles.length > 0){
         articles.forEach(article => article.remove());
     }
+}
+
+function openCollection(){
+    console.log("open");
+}
+
+function deleteCollection(e){
+    e.stopPropagation();
+    const parentArticle = e.target.closest("article");
+    const title = parentArticle.querySelector("h3").innerText;
+    dataManager.removeCollection(title);
+    refreshCollections();    
+}
+
+function lookAtCollection(e){
+    e.stopPropagation();
+    console.log("look at");
 }

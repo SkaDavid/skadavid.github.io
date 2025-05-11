@@ -166,8 +166,8 @@ div.svgDivide{
     animation: cardSpring 10s ease-in-out infinite;
     animation-delay: 2s;
 }
-/* 
-@keyframes cardSpring {
+
+/* @keyframes cardSpring {
     0% {
         transform: rotate3d(1, 1, 1, 0deg); 
     }
@@ -179,8 +179,8 @@ div.svgDivide{
         transform: translateX(0) rotate3d(1, 1, 1, 0deg);
         fill: var(--first);
     }
-}
- */
+} */
+
 text{
     stroke: rgb(63, 11, 11);
     stroke-width: 0.75;
@@ -228,8 +228,8 @@ text{
     animation: extraBounceRight 10s ease-in-out infinite;
     animation-delay: 1.8s;
 }
-/* 
-@keyframes bounceRight {
+
+/* @keyframes bounceRight {
     0% { 
         transform: translateX(0); 
     }

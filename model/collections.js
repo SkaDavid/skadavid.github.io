@@ -22,14 +22,14 @@ class CollectionManager{
     }
 
     removeCollection(name){
-        let index;
+        let index = -1;
         for(let i = 0; i < this.collections.length; i++){
-            if(this.collections[i] === name){
+            if(this.collections[i].name === name){
                 index = i;
                 break;
             }
         }
-        if(index){
+        if(index >= 0){
             delete this.collections[index];
         }
     }
