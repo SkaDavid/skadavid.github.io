@@ -39,6 +39,13 @@ class Collection{
         div.append(h2, plus);
         section.append(div);
 
+        if(collectionData.cards.length === 0){
+            const p = document.createElement("p");
+            p.innerText = "It seems there are no cards in this collection. Add some by clicking the plus sign";
+            section.append(p);
+            return section;
+        }
+
         collectionData.cards.forEach(card => {
             const article = document.createElement("article");
             article.classList.add("cards");
@@ -96,6 +103,7 @@ function newCollectionForm(closeFunction, sendFunction){
     background.append(form);
     return background;
 }
+
 
 
 export {Collection, renderMissingCollection, newCollectionForm}

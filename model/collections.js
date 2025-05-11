@@ -43,7 +43,6 @@ class CollectionManager{
         if(this.collections.length > 0){
             this.collections.forEach(collection => {
             if(collection.name === title){
-                console.log(collection.name);
                 returnC = collection;
                 }
             });

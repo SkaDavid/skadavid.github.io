@@ -55,6 +55,15 @@ function clearSidebar(){
     }
 }
 
+function refreshCollectionView(){
+
+}
+
+function clearMain(){
+    const main = document.querySelector("main");
+    main.replaceChildren();
+}
+
 function openCollection(){
     console.log("open");
 }
@@ -69,10 +78,10 @@ function deleteCollection(e){
 
 function lookAtCollection(e){
     e.stopPropagation();
+    clearMain();
     const parentArticle = e.target.closest("article");
     const title = parentArticle.querySelector("h3").innerText;
     const collection = dataManager.getCollection(title);
-    console.log(collection.name);
     const main = document.querySelector("main");
     main.append(new Collection(collection.name).renderCards(removeCard, editCard, addCard, collection));
 }
