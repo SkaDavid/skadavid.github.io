@@ -1,5 +1,6 @@
 class CollectionManager{
     collections;
+    currentCollection;
     constructor(){
         this.collections = [];
     }
@@ -23,6 +24,7 @@ class CollectionManager{
 
     removeCollection(name){
         let index = -1;
+        console.log(this.collections);
         for(let i = 0; i < this.collections.length; i++){
             if(this.collections[i].name === name){
                 index = i;
@@ -30,7 +32,7 @@ class CollectionManager{
             }
         }
         if(index >= 0){
-            delete this.collections[index];
+            this.collections.splice(index, 1);
         }
     }
 
@@ -49,6 +51,13 @@ class CollectionManager{
         }
         return returnC;
     }
+    get currentCollection(){
+        return this.currentCollection;
+    }
+    set currentCollection(collection){
+        this.currentCollection = collection;
+    }
+
 }
 
 class CollectionData{
@@ -70,11 +79,13 @@ class CollectionData{
     }
 
     addCard(card){
-        this.cards.array.forEach(element => {
-            if(element.title === card.title){
-                return -1;
-            }
-        });
+        if(this.cards.length > 0){
+            this.cards.forEach(element => {
+                if(element.title === card.title){
+                    return -1;
+                }
+            });
+        }
         this.cards.push(card);
     }
 

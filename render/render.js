@@ -1,5 +1,5 @@
 class Collection{
-    title
+    title;
     constructor(title){
         this.title = title;
     }
@@ -104,9 +104,39 @@ function newCollectionForm(closeFunction, sendFunction){
     return background;
 }
 
+function newCardForm(closeFunction, sendFunction){
+    const background = document.createElement('div');
+    background.setAttribute("id", "darkerBackground");
+
+    const form = document.createElement("form");
+    form.setAttribute("id", "cardForm");
+    form.addEventListener('submit', sendFunction);
+    
+    const cross = getSVG("cross");
+    cross.addEventListener('click', closeFunction);
+
+    const submit = document.createElement("input");
+    submit.setAttribute("type", "submit");
+    submit.value = "Create!";
+
+    const nameInput = document.createElement("input");
+    nameInput.type = "text";
+    nameInput.key = "title";
+
+    const textInput = document.createElement("input");
+    nameInput.type = "text";
+    nameInput.key = "cardText";
+
+    const text = document.createElement("p");
+    text.innerText = "Select title and text of your card:";
+
+    form.append(cross, text, nameInput, textInput, submit);
+    background.append(form);
+    return background;
+}
 
 
-export {Collection, renderMissingCollection, newCollectionForm}
+export {Collection, renderMissingCollection, newCollectionForm, newCardForm}
 
 function getSVG(name){
     const svg = svgRepo[name];
