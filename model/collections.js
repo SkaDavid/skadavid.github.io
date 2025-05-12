@@ -40,11 +40,11 @@ class CollectionManager{
         return this.collections;
     }
 
-    getCollection(title){
+    getCollection(name){
         let returnC = -1;
         if(this.collections.length > 0){
             this.collections.forEach(collection => {
-            if(collection.name === title){
+            if(collection.name === name){
                 returnC = collection;
                 }
             });
@@ -88,45 +88,30 @@ class CollectionData{
     }
 
     addCard(card){
-        let successfull = 1;
-        if(this.cards.length > 0){
-            this.cards.forEach(element => {
-                if(element.title === card.title){
-                    successfull = -1;
-                }
-            });
-        }
-        if(successfull !== -1){
+        let index = this.findCardIndex(card.title);
+        if(index === -1){
             this.cards.push(card);
+        } else{
+            return -1;
         }
-        return successfull;
     }
 
-    removeCard(name){
-        let index = -1;
-        for(let i = 0; i < this.cards.length; i++){
-            if(this.cards[i].title === name){
-                index = i;
-                break;
-            }
-        }
-        if(index >= 0){
+    removeCard(title){
+        let index = this.findCardIndex(title);
+        if(index !== -1){
             this.cards.splice(index, 1);
         }
     }
 
-    editCard(name){
-        let index = -1;
-        for(let i = 0; i < this.cards.length; i++){
-            if(this.cards[i].title === title){
-                index = i;
-                break;
-            }
+    getCard(title){
+        const index = this.findCardIndex(title);
+        if(index !== -1){
+            return this.cards[index];
         }
-        
+        return index;
     }
 
-    getCard(title){
+    findCardIndex(title){
         let index = -1;
         for(let i = 0; i < this.cards.length; i++){
             if(this.cards[i].title === title){
@@ -134,7 +119,7 @@ class CollectionData{
                 break;
             }
         }
-        return this.cards[index];
+        return index;
     }
 }
 
@@ -152,7 +137,6 @@ class CardsData{
     set title(newTitle){
         this.title = newTitle;
     }
-
     get text(){
         return this.text;
     }
