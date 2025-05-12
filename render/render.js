@@ -1,4 +1,4 @@
-import { CardsData } from "../model/collections";
+import { CardsData } from "../model/collections.js";
 
 class Collection{
     title;
@@ -42,9 +42,7 @@ class Collection{
         section.append(div);
 
         if(collectionData.cards.length === 0){
-            const p = document.createElement("p");
-            p.innerText = "It seems there are no cards in this collection. Add some by clicking the plus sign";
-            section.append(p);
+            section.append(renderMissingCards());
             return section;
         }
 
@@ -79,6 +77,12 @@ function renderMissingCollection(){
     return p;
 }
 
+function renderMissingCards(){
+        const p = document.createElement("p");
+        p.innerText = "It seems there are no cards in this collection. Add some by clicking the plus sign";
+        return p;
+}
+
 function newCollectionForm(closeFunction, sendFunction){
     const background = document.createElement('div');
     background.setAttribute("id", "darkerBackground");
@@ -106,38 +110,7 @@ function newCollectionForm(closeFunction, sendFunction){
     return background;
 }
 
-function newCardForm(closeFunction, sendFunction){
-    const background = document.createElement('div');
-    background.setAttribute("id", "darkerBackground");
-
-    const form = document.createElement("form");
-    form.setAttribute("id", "cardForm");
-    form.addEventListener('submit', sendFunction);
-    
-    const cross = getSVG("cross");
-    cross.addEventListener('click', closeFunction);
-
-    const submit = document.createElement("input");
-    submit.setAttribute("type", "submit");
-    submit.value = "Create!";
-
-    const nameInput = document.createElement("input");
-    nameInput.type = "text";
-    nameInput.key = "title";
-
-    const textInput = document.createElement("input");
-    nameInput.type = "text";
-    nameInput.key = "cardText";
-
-    const text = document.createElement("p");
-    text.innerText = "Select title and text of your card:";
-
-    form.append(cross, text, nameInput, textInput, submit);
-    background.append(form);
-    return background;
-}
-
-function editCardForm(closeFunction, sendFunction, cardData){
+function cardForm(closeFunction, sendFunction, cardData = new CardsData("", "")){
     const background = document.createElement('div');
     background.setAttribute("id", "darkerBackground");
 
@@ -170,8 +143,7 @@ function editCardForm(closeFunction, sendFunction, cardData){
     return background;
 }
 
-
-export {Collection, renderMissingCollection, editCardForm, newCollectionForm, newCardForm}
+export {Collection, renderMissingCollection, cardForm, newCollectionForm}
 
 function getSVG(name){
     const svg = svgRepo[name];

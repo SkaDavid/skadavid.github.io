@@ -1,4 +1,4 @@
-import {Collection, newCardForm, newCollectionForm, editCardForm, renderMissingCollection} from "./render/render.js";
+import {Collection, cardForm, newCollectionForm, renderMissingCollection} from "./render/render.js";
 import {CardsData, CollectionData, CollectionManager} from "./model/collections.js"
 
 // Index init
@@ -8,6 +8,7 @@ refreshSidebar();
 const body = document.querySelector("body");
 const addCollection = document.getElementById("addCollectionButton");
 addCollection.addEventListener('click', ()=>{
+    console.log("gi")
     const form = newCollectionForm(clearFormView, sendNewCollectionForm);
     body.append(form);
 })
@@ -58,7 +59,7 @@ function openStudyCollectionView(){
 
 function openAddCardForm(){
     const body = document.querySelector("body");
-    body.append(newCardForm(clearFormView, sendNewCard));
+    body.append(cardForm(clearFormView, sendNewCard));
 }
 
 function sendNewCard(e){
@@ -94,7 +95,7 @@ function editCard(e){
     const cardData = dataManager.currentCollection.getCard(title);
     dataManager.currentCard = cardData;
     console.log(cardData.text); 
-    const form = editCardForm(clearFormView, sendEditCardForm, cardData);
+    const form = cardForm(clearFormView, sendEditCardForm, cardData);
     body.append(form);
 }
 
