@@ -123,7 +123,11 @@ function cardForm(closeFunction, sendFunction, cardData = new CardsData("", ""))
 
     const submit = document.createElement("input");
     submit.setAttribute("type", "submit");
-    submit.value = "Edit!";
+    if(cardData.title === ""){
+        submit.value = "Create!"
+    } else{
+        submit.value = "Edit!";
+    }
 
     const nameInput = document.createElement("input");
     nameInput.type = "text";
