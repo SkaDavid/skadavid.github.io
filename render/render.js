@@ -76,6 +76,15 @@ class Collection{
         const h2 = document.createElement("h2");
         h2.innerText = collectionData.name;
 
+        const card = document.createElement("div");
+        card.setAttribute("id", "card");
+
+        const frontDiv = document.createElement("div");
+        frontDiv.classList.add("cardFace", "frontPage");
+
+        const backDiv = document.createElement("div");
+        backDiv.classList.add("cardFace", "backPage");
+
         const studyContainer = document.createElement("div");
         studyContainer.classList.add("studyContainer")
 
@@ -83,14 +92,16 @@ class Collection{
         const h3 = document.createElement("h3");
         h3.innerText = currentCard.title;
         h3.setAttribute("id", "frontPage");
-        h3.classList.add("visible");
 
         const p = document.createElement("p");
         p.innerText = currentCard.text;
         p.setAttribute("id", "backPage");
-        p.classList.add("invisible");
 
-        studyContainer.append(h3, p);
+        frontDiv.append(h3);
+        backDiv.append(p);
+        card.append(frontDiv, backDiv);
+        studyContainer.append(card);
+
 
         const svgContainer = document.createElement("div");
         svgContainer.classList.add("controlsContainer");

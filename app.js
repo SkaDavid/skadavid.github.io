@@ -43,10 +43,8 @@ function previousCard(){
 
 function turnOver(e){
     const parentSection = e.target.closest("section");
-    const p = parentSection.querySelector("p");
-    const h3 = parentSection.querySelector("h3");
-    p.classList.toggle("invisible");
-    h3.classList.toggle("invisible");
+    const card = parentSection.querySelector("#card");
+    card.classList.toggle("flipped");
 }
 
 // updating dom
