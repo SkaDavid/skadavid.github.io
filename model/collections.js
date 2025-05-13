@@ -72,9 +72,11 @@ class CollectionManager{
 class CollectionData{
     name;
     cards;
+    currentIndex;
     constructor(name){
         this.name = name;
         this.cards = [];
+        this.currentIndex = 0;
     }
     get name(){
         return this.name;
@@ -85,6 +87,28 @@ class CollectionData{
 
     get cards(){
         return this.cards;
+    }
+
+    getNext(){
+        if(this.currentIndex >= this.cards.length - 1){
+            this.currentIndex = 0;
+        } else{
+            this.currentIndex += 1;
+        }
+        return this.cards[this.currentIndex];
+    }
+
+    getPrevious(){
+        if(this.currentIndex <= 0){
+            this.currentIndex = this.cards.length - 1;
+        }
+        else{
+            this.currentIndex -= 1;
+        }
+        return this.cards[this.currentIndex];
+    }
+    getCurrent(){
+        return this.cards[this.currentIndex];
     }
 
     addCard(card){
