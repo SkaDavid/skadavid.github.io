@@ -55,7 +55,7 @@ function refreshSidebar(){
     if(collections.length !== 0){
         collections.forEach(collection => {
             const collectionArticle = new Collection(collection.name);
-            aside.append(collectionArticle.render(deleteCollection, openEditCollectionView, openStudyCollectionView));
+            aside.append(collectionArticle.render(deleteCollection, openEditCollectionView, openStudyCollectionView, dropCard));
         })
     } else{
         aside.append(renderMissingCollection());
@@ -78,13 +78,41 @@ function clearSidebar(){
 function refreshEditCollectionView(){
     const main = document.querySelector("main");
     const currentCollection = dataManager.currentCollection;
-    main.append(new Collection(currentCollection.name).renderCards(removeCardFromCollection, editCard, openAddCardForm, currentCollection));
+    main.append(new Collection(currentCollection.name).renderCards(removeCardFromCollection, editCard, openAddCardForm, dragCard, currentCollection));
 }
 
 function clearMain(){
     const main = document.querySelector("main");
     main.replaceChildren();
 }
+
+// drag 'n drop functions
+
+function dragCard(e) {
+    const card = e.currentTarget;
+    const h2 = card.querySelector("h3").innerText; 
+    const p = card.querySelector("p").innerText; 
+    const cardDto = {
+        "title": h2,
+        "text": p
+    };
+    e.dataTransfer.setData("application/json", JSON.stringify(cardDto));
+}
+
+function dropCard(e){
+    const data = JSON.parse(e.dataTransfer.getData("application/json"));
+    const collectionName = e.currentTarget.querySelector("h3").innerText;
+    
+    const collection = dataManager.getCollection(collectionName);
+    const success = collection.addCard(new CardsData(data.title, data.text));
+    if(success === -1){
+        alert("nope");
+    } else {
+        alert("GOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOD");
+        dataManager.refreshLocalStorage();
+    }
+}
+
 
 
 // listeners functions
@@ -123,7 +151,7 @@ function openEditCollectionView(e){
     const collection = dataManager.getCollection(title);
     dataManager.currentCollection = collection;
     const main = document.querySelector("main");
-    main.append(new Collection(collection.name).renderCards(removeCardFromCollection, editCard, openAddCardForm, collection));
+    main.append(new Collection(collection.name).renderCards(removeCardFromCollection, editCard, openAddCardForm, dragCard, collection));
 }
 
 function openAddCardForm(){

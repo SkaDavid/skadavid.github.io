@@ -6,9 +6,13 @@ class Collection{
         this.title = title;
     }
 
-    render(deleteFunction, lookFunction, openFunction){
+    render(deleteFunction, lookFunction, openFunction, dropCard){
         const article = document.createElement("article");
         article.classList.add("aside");
+        article.addEventListener("dragover", e => {
+            e.preventDefault(); // TODO
+        });
+        article.addEventListener("drop", dropCard);
         const header = document.createElement("h3");
         header.innerText = this.title;
         const div = document.createElement("div");
@@ -26,7 +30,7 @@ class Collection{
         return article;
     }
 
-    renderCards(deleteCard, editCard, addCard, collectionData){
+    renderCards(deleteCard, editCard, addCard, dragCard, collectionData){
         const section = document.createElement("section");
         section.classList.add("cardsContainer");
 
@@ -48,6 +52,7 @@ class Collection{
 
         collectionData.cards.forEach(card => {
             const article = document.createElement("article");
+            article.addEventListener("dragstart", dragCard); 
             article.classList.add("cards");
 
             const h3 = document.createElement("h3");
@@ -65,7 +70,8 @@ class Collection{
 
             svgContainer.append(pencil, bin);
             article.append(h3, p, svgContainer);
-            section.append(article);    
+            section.append(article);   
+            
         });
         return section;
     }
