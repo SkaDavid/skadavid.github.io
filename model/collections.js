@@ -9,7 +9,6 @@ class CollectionManager{
 
     initializeFromLocalStorage(){
         if(localStorage.collections){
-            console.log(localStorage.collections)
             const collectionsPlainObjects = JSON.parse(localStorage.collections);
             collectionsPlainObjects.forEach((object) => {
                 this.collections.push(new CollectionData(
