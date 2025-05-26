@@ -4,6 +4,31 @@ class CollectionManager{
     currentCard;
     constructor(){
         this.collections = [];
+        this.initializeFromLocalStorage();
+    }
+
+    initializeFromLocalStorage(){
+        if(localStorage.collections){
+            console.log(localStorage.collections)
+            const collectionsPlainObjects = JSON.parse(localStorage.collections);
+            collectionsPlainObjects.forEach((object) => {
+                this.collections.push(new CollectionData(
+                    object.name, 
+                    object.cards.map(card => new CardsData(card.title, card.text)), 
+                    object.currentIndex));
+            })
+            this.currentCollection = this.collections[0];
+            this.currentCard = this.currentCollection.cards[0];
+        }
+    }
+
+    refreshLocalStorage(){
+        if(this.collections.length === 0){
+            localStorage.clear();
+        } else{
+            const collectionJson = JSON.stringify(this.collections);
+            localStorage.setItem("collections", collectionJson);
+        }
     }
 
     addCollection(collection){
@@ -18,6 +43,7 @@ class CollectionManager{
         }
         if(!collision){
             this.collections.push(collection);
+            this.refreshLocalStorage();
         } else{
             return -1;
         }
@@ -33,6 +59,7 @@ class CollectionManager{
         }
         if(index >= 0){
             this.collections.splice(index, 1);
+            this.refreshLocalStorage();
         }
     }
 
@@ -73,10 +100,10 @@ class CollectionData{
     name;
     cards;
     currentIndex;
-    constructor(name){
+    constructor(name, cards = [], currentIndex = 0){
         this.name = name;
-        this.cards = [];
-        this.currentIndex = 0;
+        this.cards = cards;
+        this.currentIndex = currentIndex;
     }
     get name(){
         return this.name;

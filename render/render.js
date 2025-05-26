@@ -71,6 +71,11 @@ class Collection{
     }
 
     renderStudyMode(collectionData, nextCard, previousCard, turnOver){
+        if(collectionData.cards.length === 0){
+            const section = document.createElement("section");
+            section.append(renderMissingCards());
+            return section;
+        }
         const section = document.createElement("section");
         section.classList.add("studyCollection");
         const h2 = document.createElement("h2");
@@ -129,7 +134,7 @@ function renderMissingCollection(){
 
 function renderMissingCards(){
         const p = document.createElement("p");
-        p.innerText = "It seems there are no cards in this collection. Add some by clicking the plus sign";
+        p.innerText = "It seems there are no cards in this collection. Add some by clicking the plus sign in the edit page of the collection.";
         return p;
 }
 

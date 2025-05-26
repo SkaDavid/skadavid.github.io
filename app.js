@@ -141,6 +141,7 @@ function sendNewCard(e){
     if(successful === -1){
         alert("nppe");
     } else{
+        dataManager.refreshLocalStorage();
         clearFormView();
         clearMain();
         refreshEditCollectionView()
@@ -153,6 +154,7 @@ function removeCardFromCollection(e){
     const currentCollection = dataManager.currentCollection;
     currentCollection.removeCard(title);
 
+    dataManager.refreshLocalStorage();
     clearMain();
     refreshEditCollectionView();
 }
@@ -174,6 +176,7 @@ function sendEditCardForm(e){
     const currentCollection = dataManager.currentCollection;
     dataManager.setCurrentCard(title, text);
 
+    dataManager.refreshLocalStorage();
     clearFormView();
     clearMain();
     refreshEditCollectionView();
