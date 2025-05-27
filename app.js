@@ -1,8 +1,22 @@
 import {Collection, cardForm, newCollectionForm, renderMissingCollection} from "./render/render.js";
 import {CardsData, CollectionData, CollectionManager} from "./model/collections.js"
+import SoundManager from "./sound/sound.js"
 
 // Index init
 const dataManager = new CollectionManager();
+const soundManager = new SoundManager();
+
+const toggleSoundButton = document.getElementById("soundToggle");
+toggleSoundButton.addEventListener("click", ()=>{
+    soundManager.toggleSound();
+    if(soundManager.getSoundActive()){
+        toggleSoundButton.innerText = "Turn sound off";
+    } else{
+        toggleSoundButton.innerText = "Turn sound on";
+    }
+})
+const toggleAnimationButton = document.getElementById("animationToggle");
+
 refreshSidebar();
 
 const body = document.querySelector("body");
@@ -32,16 +46,19 @@ function refreshStudyCollectionView(){
 }
 
 function nextCard(){
+    soundManager.nextCardSound();
     dataManager.currentCollection.getNext();
     refreshStudyCollectionView();
 }
 
 function previousCard(){
+    soundManager.prevCardSound();
     dataManager.currentCollection.getPrevious();
     refreshStudyCollectionView();
 }
 
 function turnOver(e){
+    soundManager.turnOverSound();
     const parentSection = e.target.closest("section");
     const card = parentSection.querySelector("#card");
     card.classList.toggle("flipped");
