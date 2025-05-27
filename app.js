@@ -32,6 +32,21 @@ toggleAnimationButton.addEventListener("click", ()=>{
 
 refreshSidebar();
 
+window.addEventListener("popstate", e => {
+    const state = e.state;
+    console.log(state);
+    if(state !== null){
+        if(state.mode === "edit"){
+            openEditFromHistory(state.collection);
+        } else if(state.mode === "study"){
+            openStudyFromHistory(state.collection);
+        } else{
+            clearMain();
+        }
+        
+    } 
+})
+
 const body = document.querySelector("body");
 const addCollection = document.getElementById("addCollectionButton");
 addCollection.addEventListener('click', ()=>{
@@ -40,6 +55,23 @@ addCollection.addEventListener('click', ()=>{
     document.querySelector("input").focus();
 })
 
+
+//TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+// history
+function openStudyFromHistory(title){
+    clearMain();
+    const collection = dataManager.getCollection(title);
+    dataManager.currentCollection = collection;
+    refreshStudyCollectionView();
+}
+
+function openEditFromHistory(title){
+    clearMain();
+    const collection = dataManager.getCollection(title);
+    dataManager.currentCollection = collection;
+    const main = document.querySelector("main");
+    main.append(new Collection(collection.name).renderCards(removeCardFromCollection, editCard, openAddCardForm, dragCard, collection));
+}
 
 // Listeners for studyMode
 function openStudyCollectionView(e){
@@ -50,6 +82,7 @@ function openStudyCollectionView(e){
     const collection = dataManager.getCollection(title);
     dataManager.currentCollection = collection;
     refreshStudyCollectionView();
+    history.pushState({"collection": title, "mode": "study"}, "", `?collection=${title}&mode=study`);
 }
 
 function refreshStudyCollectionView(){
@@ -174,6 +207,7 @@ function deleteCollection(e){
     clearMain();
 }
 
+//TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 function openEditCollectionView(e){
     e.stopPropagation();
     clearMain();
@@ -183,6 +217,7 @@ function openEditCollectionView(e){
     dataManager.currentCollection = collection;
     const main = document.querySelector("main");
     main.append(new Collection(collection.name).renderCards(removeCardFromCollection, editCard, openAddCardForm, dragCard, collection));
+    history.pushState({"collection": collection.name, "mode": "edit"}, "", `?collection=${collection.name}&mode=edit`);
 }
 
 function openAddCardForm(){
