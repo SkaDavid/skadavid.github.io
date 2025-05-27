@@ -3,6 +3,7 @@ class SoundManager{
     prevCard;
     nextCard;
     turnOver;
+    lastRecorderAudio;
     
     constructor(){
         this.soundActive = true;
@@ -43,6 +44,54 @@ class SoundManager{
 
     getSoundActive(){
         return this.soundActive;
+    }
+
+    soundControls(){        
+        const soundWrapper = document.createElement("div");
+        soundWrapper.classList.add("soundWrapper");
+        this.lastRecorderAudio = null;
+        
+        let mediaRecorder;
+        let audioChunks = [];
+
+        const audio = document.createElement("audio");
+        audio.setAttribute("controls", true);
+        
+        const startButton = document.createElement("button");
+        startButton.innerText = "start";
+        startButton.addEventListener("click", async(e)=>{
+            e.preventDefault();
+            const stream = await navigator.mediaDevices.getUserMedia({audio: true});
+            mediaRecorder = new MediaRecorder(stream);
+
+            audioChunks = [];
+/*             mediaRecorder.ondataavailable = e => {
+                audioChunks.push(e.data)
+            } */
+
+            mediaRecorder.addEventListener("dataavailable", e => {
+                audioChunks.push(e.data);
+            })
+
+            mediaRecorder.addEventListener("stop", () => {
+                const audioBlob = new Blob(audioChunks, {type: "audio/webm"});
+                const audioURL = URL.createObjectURL(audioBlob);
+                audio.src = audioURL;
+                this.lastRecorderAudio = audioBlob;
+            });
+
+            mediaRecorder.start();
+        })        
+
+        const stopButton = document.createElement("button");
+        stopButton.innerText = "stop";
+        stopButton.addEventListener("click", (e) => {
+            e.preventDefault();
+            mediaRecorder.stop();
+        });
+
+        soundWrapper.append(startButton, stopButton, audio);
+        return soundWrapper;
     }
 }
 

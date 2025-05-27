@@ -188,9 +188,11 @@ class CollectionData{
 class CardsData{
     title;
     text;
-    constructor(title, text){
+    audio;
+    constructor(title, text, audio){
         this.title = title;
         this.text = text;
+        this.audio = audio;
     }
 
     get title(){

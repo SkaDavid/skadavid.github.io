@@ -135,7 +135,7 @@ function dropCard(e){
     const collectionName = e.currentTarget.querySelector("h3").innerText;
     
     const collection = dataManager.getCollection(collectionName);
-    const success = collection.addCard(new CardsData(data.title, data.text));
+    const success = collection.addCard(new CardsData(data.title, data.text, soundManager.lastRecorderAudio));
     if(success){
         document.querySelector("body").append(printCopyMessage(collection.name, true));
         dataManager.refreshLocalStorage();
@@ -187,7 +187,7 @@ function openEditCollectionView(e){
 
 function openAddCardForm(){
     const body = document.querySelector("body");
-    body.append(cardForm(clearFormView, sendNewCard));
+    body.append(cardForm(clearFormView, sendNewCard, soundManager));
     document.querySelector("input").focus();
 }
 
@@ -195,7 +195,7 @@ function sendNewCard(e){
     e.preventDefault();
     const title = e.target[0].value;
     const text = e.target[1].value;
-    const card = new CardsData(title, text);
+    const card = new CardsData(title, text, soundManager.lastRecorderAudio);
     const currentCollection = dataManager.currentCollection;
 
     //check for empty inputs
@@ -235,7 +235,7 @@ function editCard(e){
     const title = parentArticle.querySelector("h3").innerText;
     const cardData = dataManager.currentCollection.getCard(title);
     dataManager.currentCard = cardData;
-    const form = cardForm(clearFormView, sendEditCardForm, cardData);
+    const form = cardForm(clearFormView, sendEditCardForm, soundManager, cardData);
     body.append(form);
     document.querySelector("input").focus();
 }

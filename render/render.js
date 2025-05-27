@@ -59,6 +59,14 @@ class Collection{
             h3.innerText = card.title;
             const p = document.createElement("p");
             p.innerText = card.text;
+
+            let audio;
+            if(card.audio){
+                const audioURL = URL.createObjectURL(card.audio);
+                audio = new Audio(audioURL);
+                audio.setAttribute("controls", true);
+            }
+
             const svgContainer = document.createElement("div");
             svgContainer.classList.add("svgContainer");
 
@@ -69,9 +77,12 @@ class Collection{
             bin.addEventListener("click", deleteCard);
 
             svgContainer.append(pencil, bin);
-            article.append(h3, p, svgContainer);
+            if(card.audio){
+                article.append(h3, p, audio, svgContainer);
+            } else{
+                article.append(h3, p, svgContainer);
+            }
             section.append(article);   
-            
         });
         return section;
     }
@@ -107,9 +118,20 @@ class Collection{
         const p = document.createElement("p");
         p.innerText = currentCard.text;
         p.setAttribute("id", "backPage");
+        let audio;
+        if(currentCard.audio){
+            const audioURL = URL.createObjectURL(currentCard.audio);
+            audio = new Audio(audioURL);
+            audio.setAttribute("controls", true);
+        }
+
 
         frontDiv.append(h3);
-        backDiv.append(p);
+        if(currentCard.audio){
+            backDiv.append(p, audio);
+        } else{
+            backDiv.append(p);
+        }
         card.append(frontDiv, backDiv);
         studyContainer.append(card);
 
@@ -179,7 +201,7 @@ function newCollectionForm(closeFunction, sendFunction){
     return background;
 }
 
-function cardForm(closeFunction, sendFunction, cardData = new CardsData("", "")){
+function cardForm(closeFunction, sendFunction, soundManager, cardData = new CardsData("", "", null)){
     const background = document.createElement('div');
     background.setAttribute("id", "darkerBackground");
 
@@ -220,7 +242,9 @@ function cardForm(closeFunction, sendFunction, cardData = new CardsData("", ""))
     const text = document.createElement("p");
     text.innerText = "Select title and text of your card:";
 
-    form.append(cross, text, errorMessageTitle, errorMessageNullInput, nameInput, textInput, submit);
+    const sound = soundManager.soundControls();
+
+    form.append(cross, text, errorMessageTitle, errorMessageNullInput, nameInput, textInput, submit, sound);
     background.append(form);
     return background;
 }
