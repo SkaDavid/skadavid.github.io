@@ -37,6 +37,7 @@ const addCollection = document.getElementById("addCollectionButton");
 addCollection.addEventListener('click', ()=>{
     const form = newCollectionForm(clearFormView, sendNewCollectionForm);
     body.append(form);
+    document.querySelector("input").focus();
 })
 
 
@@ -159,7 +160,7 @@ function sendNewCollectionForm(e){
         clearFormView();
         refreshSidebar();
     } else{
-        const errorMessage = e.currentTarget.querySelector(".errorMessage");
+        const errorMessage = e.currentTarget.querySelector(".errorMessageTitle");
         errorMessage.classList.remove("hidden");
     };
 }
@@ -187,6 +188,7 @@ function openEditCollectionView(e){
 function openAddCardForm(){
     const body = document.querySelector("body");
     body.append(cardForm(clearFormView, sendNewCard));
+    document.querySelector("input").focus();
 }
 
 function sendNewCard(e){
@@ -195,13 +197,24 @@ function sendNewCard(e){
     const text = e.target[1].value;
     const card = new CardsData(title, text);
     const currentCollection = dataManager.currentCollection;
+
+    //check for empty inputs
+    const errorMessageNullInput = e.currentTarget.querySelector(".errorMessageNullInput");
+    const errorMessage = e.currentTarget.querySelector(".errorMessageTitle");
+    errorMessage.classList.add("hidden");
+    if(title.length === 0 || text.length === 0){
+        errorMessageNullInput.classList.remove("hidden");
+        return;
+    } else{
+        errorMessageNullInput.classList.add("hidden");
+    }
+    // Check for non unique title
     if(currentCollection.addCard(card)){
         dataManager.refreshLocalStorage();
         clearFormView();
         clearMain();
         refreshEditCollectionView();
     } else{
-        const errorMessage = e.currentTarget.querySelector(".errorMessage");
         errorMessage.classList.remove("hidden");
     };
 }
@@ -222,22 +235,31 @@ function editCard(e){
     const title = parentArticle.querySelector("h3").innerText;
     const cardData = dataManager.currentCollection.getCard(title);
     dataManager.currentCard = cardData;
-    console.log(cardData.text); 
     const form = cardForm(clearFormView, sendEditCardForm, cardData);
     body.append(form);
+    document.querySelector("input").focus();
 }
 
 function sendEditCardForm(e){
     e.preventDefault();
     const title = e.target[0].value;
     const text = e.target[1].value;
+    
+    const errorMessageNullInput = e.currentTarget.querySelector(".errorMessageNullInput");
+    const errorMessage = e.currentTarget.querySelector(".errorMessageTitle");
+    errorMessage.classList.add("hidden");
+    if(title.length === 0 || text.length === 0){
+        errorMessageNullInput.classList.remove("hidden");
+        return;
+    } else{
+        errorMessageNullInput.classList.add("hidden");
+    }
     if(dataManager.setCurrentCard(title, text)){
         dataManager.refreshLocalStorage();
         clearFormView();
         clearMain();
         refreshEditCollectionView();
     } else{
-        const errorMessage = e.currentTarget.querySelector(".errorMessage");
         errorMessage.classList.remove("hidden");
     };
 }

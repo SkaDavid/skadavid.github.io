@@ -159,9 +159,12 @@ function newCollectionForm(closeFunction, sendFunction){
     submit.setAttribute("type", "submit");
     submit.value = "Create!";
 
-    const errorMessage = document.createElement("p");
-    errorMessage.classList.add("errorMessage", "hidden");
-    errorMessage.innerText = "This title already exists. Please choose unique title.";
+    const errorMessageTitle = document.createElement("p");
+    errorMessageTitle.classList.add("errorMessageTitle", "hidden");
+    errorMessageTitle.innerText = "This title already exists. Please choose unique title.";
+    const errorMessageNullInput = document.createElement("p");
+    errorMessageNullInput.classList.add("errorMessageNullInput", "hidden");
+    errorMessageNullInput.innerText = "Input fields should not be empty.";
 
     const nameInput = document.createElement("input");
     nameInput.type = "text";
@@ -170,7 +173,7 @@ function newCollectionForm(closeFunction, sendFunction){
     const text = document.createElement("p");
     text.innerText = "Select a name for your collection:";
 
-    form.append(cross, text, errorMessage, nameInput, submit);
+    form.append(cross, text, errorMessageTitle, errorMessageNullInput, nameInput, submit);
     background.append(form);
     return background;
 }
@@ -199,9 +202,12 @@ function cardForm(closeFunction, sendFunction, cardData = new CardsData("", ""))
     nameInput.key = "title";
     nameInput.value = cardData.title;
 
-    const errorMessage = document.createElement("p");
-    errorMessage.classList.add("errorMessage", "hidden");
-    errorMessage.innerText = "This title already exists. Please choose unique title.";
+    const errorMessageTitle = document.createElement("p");
+    errorMessageTitle.classList.add("errorMessageTitle", "hidden");
+    errorMessageTitle.innerText = "This title already exists. Please choose unique title.";
+    const errorMessageNullInput = document.createElement("p");
+    errorMessageNullInput.classList.add("errorMessageNullInput", "hidden");
+    errorMessageNullInput.innerText = "Input fields should not be empty.";
 
     const textInput = document.createElement("input");
     textInput.type = "text";
@@ -211,7 +217,7 @@ function cardForm(closeFunction, sendFunction, cardData = new CardsData("", ""))
     const text = document.createElement("p");
     text.innerText = "Select title and text of your card:";
 
-    form.append(cross, text, errorMessage, nameInput, textInput, submit);
+    form.append(cross, text, errorMessageTitle, errorMessageNullInput, nameInput, textInput, submit);
     background.append(form);
     return background;
 }

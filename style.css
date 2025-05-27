@@ -118,7 +118,7 @@ div.svgDivide{
   width: 100vw; 
   height: 100vh;
   background: rgba(0, 0, 0, 0.5);
-  display: flex;
+  display: flex;        
   justify-content: center;
   align-items: center;
 }
@@ -249,7 +249,7 @@ main .controlsContainer{
     gap: 70px;
 }
 
-.errorMessage{
+.errorMessageTitle, .errorMessageNullInput{
     background-color: red;
 
 }
