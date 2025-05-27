@@ -91,7 +91,6 @@ class CollectionManager{
 
     setCurrentCard(title, text){
         let collisionFree = true;
-        console.log(this.currentCollection);
         this.currentCollection.cards.forEach(card => {
             if(card.title === title){
                 collisionFree = false;
