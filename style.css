@@ -248,6 +248,28 @@ main .controlsContainer{
     margin-top: 50px;
     gap: 70px;
 }
+/* temporary error messages */
+    /* copy after dragndrop */
+.copyMessage{
+    position: absolute;
+    left: calc(50vw - 400px);
+    top: 50px;
+    width: 400px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.success{
+    background-color: greenyellow;
+}
+
+    /* Form validation */ 
+.error{
+    background-color: #ff5549;
+}
+
 
 .errorMessageTitle, .errorMessageNullInput{
     background-color: red;

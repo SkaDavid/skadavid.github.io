@@ -1,4 +1,4 @@
-import {Collection, cardForm, newCollectionForm, renderMissingCollection} from "./render/render.js";
+import {Collection, cardForm, newCollectionForm, renderMissingCollection, printCopyMessage} from "./render/render.js";
 import {CardsData, CollectionData, CollectionManager} from "./model/collections.js"
 import SoundManager from "./sound/sound.js"
 
@@ -136,11 +136,11 @@ function dropCard(e){
     
     const collection = dataManager.getCollection(collectionName);
     const success = collection.addCard(new CardsData(data.title, data.text));
-    if(success === -1){
-        alert("nope");
-    } else {
-        alert("GOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOD");
+    if(success){
+        document.querySelector("body").append(printCopyMessage(collection.name, true));
         dataManager.refreshLocalStorage();
+    } else {
+        document.querySelector("body").append(printCopyMessage(collection.name, false));
     }
 }
 

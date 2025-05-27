@@ -225,7 +225,27 @@ function cardForm(closeFunction, sendFunction, cardData = new CardsData("", ""))
     return background;
 }
 
-export {Collection, renderMissingCollection, cardForm, newCollectionForm}
+function printCopyMessage(name, success){
+    const div = document.createElement("div");
+    div.classList.add("copyMessage");
+    
+    const p = document.createElement("p");
+    if(success){
+        p.innerText = "Card was succesfully copied into collection \"" + name + "\""; 
+        div.classList.add("success");
+    } else{
+        p. innerText = "The card already exists in collection \"" + name +  "\".";
+        div.classList.add("error");
+    }
+    setTimeout(()=>{
+        div.remove();
+    }, 5000);
+    div.append(p);
+    return div;
+}
+
+
+export {Collection, renderMissingCollection, cardForm, newCollectionForm, printCopyMessage}
 
 function getSVG(name){
     const svg = svgRepo[name];
