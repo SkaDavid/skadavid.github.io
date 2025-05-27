@@ -168,6 +168,7 @@ function newCollectionForm(closeFunction, sendFunction){
 
     const nameInput = document.createElement("input");
     nameInput.type = "text";
+    nameInput.placeholder = "My new card collection";
     nameInput.key = "name";
 
     const text = document.createElement("p");
@@ -200,6 +201,7 @@ function cardForm(closeFunction, sendFunction, cardData = new CardsData("", ""))
     const nameInput = document.createElement("input");
     nameInput.type = "text";
     nameInput.key = "title";
+    nameInput.placeholder = "Card title";
     nameInput.value = cardData.title;
 
     const errorMessageTitle = document.createElement("p");
@@ -212,6 +214,7 @@ function cardForm(closeFunction, sendFunction, cardData = new CardsData("", ""))
     const textInput = document.createElement("input");
     textInput.type = "text";
     textInput.key = "cardText";
+    textInput.placeholder = "A title is a name, in this case for a card.";
     textInput.value = cardData.text;
 
     const text = document.createElement("p");
