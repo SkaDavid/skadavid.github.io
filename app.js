@@ -14,8 +14,21 @@ toggleSoundButton.addEventListener("click", ()=>{
     } else{
         toggleSoundButton.innerText = "Turn sound on";
     }
-})
+});
 const toggleAnimationButton = document.getElementById("animationToggle");
+toggleAnimationButton.addEventListener("click", ()=>{
+    const textSvgs = document.querySelectorAll(".svgText");
+    const cardLogos = document.querySelectorAll(".cardLogo");
+    textSvgs.forEach(element => {
+        element.classList.toggle("animation");
+    })
+    cardLogos.forEach(element => {
+        element.classList.toggle("animation");
+    })
+    toggleAnimationButton.innerText = toggleAnimationButton.innerText === "Turn animation off" ?
+        "Turn animation on" : "Turn animation off";
+    
+});
 
 refreshSidebar();
 
@@ -142,13 +155,13 @@ function sendNewCollectionForm(e){
     e.preventDefault();
     const name = e.target[0].value;
     const collection = new CollectionData(name);
-    const successfull = dataManager.addCollection(collection);
-    if(successfull === -1){
-        alert("nope");
-    } else{
+    if(dataManager.addCollection(collection)){
         clearFormView();
         refreshSidebar();
-    }
+    } else{
+        const errorMessage = e.currentTarget.querySelector(".errorMessage");
+        errorMessage.classList.remove("hidden");
+    };
 }
 
 function deleteCollection(e){
@@ -182,15 +195,15 @@ function sendNewCard(e){
     const text = e.target[1].value;
     const card = new CardsData(title, text);
     const currentCollection = dataManager.currentCollection;
-    const successful = currentCollection.addCard(card);
-    if(successful === -1){
-        alert("nppe");
-    } else{
+    if(currentCollection.addCard(card)){
         dataManager.refreshLocalStorage();
         clearFormView();
         clearMain();
-        refreshEditCollectionView()
-    }
+        refreshEditCollectionView();
+    } else{
+        const errorMessage = e.currentTarget.querySelector(".errorMessage");
+        errorMessage.classList.remove("hidden");
+    };
 }
 
 function removeCardFromCollection(e){
@@ -218,11 +231,13 @@ function sendEditCardForm(e){
     e.preventDefault();
     const title = e.target[0].value;
     const text = e.target[1].value;
-    const currentCollection = dataManager.currentCollection;
-    dataManager.setCurrentCard(title, text);
-
-    dataManager.refreshLocalStorage();
-    clearFormView();
-    clearMain();
-    refreshEditCollectionView();
+    if(dataManager.setCurrentCard(title, text)){
+        dataManager.refreshLocalStorage();
+        clearFormView();
+        clearMain();
+        refreshEditCollectionView();
+    } else{
+        const errorMessage = e.currentTarget.querySelector(".errorMessage");
+        errorMessage.classList.remove("hidden");
+    };
 }

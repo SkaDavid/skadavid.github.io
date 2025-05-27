@@ -43,8 +43,9 @@ class CollectionManager{
         if(!collision){
             this.collections.push(collection);
             this.refreshLocalStorage();
+            return true;
         } else{
-            return -1;
+            return false;
         }
     }
 
@@ -89,8 +90,19 @@ class CollectionManager{
     }
 
     setCurrentCard(title, text){
-        this.currentCard.title = title;
-        this.currentCard.text = text;
+        let collisionFree = true;
+        console.log(this.currentCollection);
+        this.currentCollection.cards.forEach(card => {
+            if(card.title === title){
+                collisionFree = false;
+                return;
+            }
+        })
+        if(collisionFree){
+            this.currentCard.title = title;
+            this.currentCard.text = text;
+        }
+        return collisionFree;
     }
 
 }
@@ -141,8 +153,9 @@ class CollectionData{
         let index = this.findCardIndex(card.title);
         if(index === -1){
             this.cards.push(card);
+            return true;
         } else{
-            return -1;
+            return false;
         }
     }
 

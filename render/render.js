@@ -159,6 +159,10 @@ function newCollectionForm(closeFunction, sendFunction){
     submit.setAttribute("type", "submit");
     submit.value = "Create!";
 
+    const errorMessage = document.createElement("p");
+    errorMessage.classList.add("errorMessage", "hidden");
+    errorMessage.innerText = "This title already exists. Please choose unique title.";
+
     const nameInput = document.createElement("input");
     nameInput.type = "text";
     nameInput.key = "name";
@@ -166,7 +170,7 @@ function newCollectionForm(closeFunction, sendFunction){
     const text = document.createElement("p");
     text.innerText = "Select a name for your collection:";
 
-    form.append(cross, text, nameInput, submit);
+    form.append(cross, text, errorMessage, nameInput, submit);
     background.append(form);
     return background;
 }
@@ -195,6 +199,10 @@ function cardForm(closeFunction, sendFunction, cardData = new CardsData("", ""))
     nameInput.key = "title";
     nameInput.value = cardData.title;
 
+    const errorMessage = document.createElement("p");
+    errorMessage.classList.add("errorMessage", "hidden");
+    errorMessage.innerText = "This title already exists. Please choose unique title.";
+
     const textInput = document.createElement("input");
     textInput.type = "text";
     textInput.key = "cardText";
@@ -203,7 +211,7 @@ function cardForm(closeFunction, sendFunction, cardData = new CardsData("", ""))
     const text = document.createElement("p");
     text.innerText = "Select title and text of your card:";
 
-    form.append(cross, text, nameInput, textInput, submit);
+    form.append(cross, text, errorMessage, nameInput, textInput, submit);
     background.append(form);
     return background;
 }

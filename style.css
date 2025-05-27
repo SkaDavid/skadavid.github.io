@@ -249,7 +249,14 @@ main .controlsContainer{
     gap: 70px;
 }
 
+.errorMessage{
+    background-color: red;
 
+}
+
+.hidden{
+    visibility: collapse;
+}
 
 /* Header and header animation */
 .svgText{
@@ -260,14 +267,13 @@ main .controlsContainer{
     background-color: var(--third);
 }
 
-#card1, #card2, #card3{
+.cardLogo{
     stroke: rgb(10, 1, 1);
     stroke-width: 1;
     fill: var(--first);
-    animation: headerMovement 1s linear 0 infinite;
 }
 
-#card2 {
+.cardLogo:nth-of-type(2).animation {
     transform: translateX(0px) rotate3d(1, 1, 1, 0);
     transform-origin: 405px;
     animation: cardSpring 10s ease-in-out infinite;
@@ -288,50 +294,44 @@ main .controlsContainer{
     }
 }
 
-text{
+.svgText{
     stroke: rgb(63, 11, 11);
     stroke-width: 0.75;
 }
-
-#char1 {
+.svgText.animation{
     animation: bounceRight 10s ease-in-out infinite;
+}
+
+.svgText:nth-of-type(1).animation {
     animation-delay: 0s;
 }
 
-#char2 {
-    animation: bounceRight 10s ease-in-out infinite;
+.svgText:nth-of-type(2).animation {
     animation-delay: 0.2s;
 }
 
-#char3 {
-    animation: bounceRight 10s ease-in-out infinite;
+.svgText:nth-of-type(3).animation {
     animation-delay: 0.4s;
 }
-#char4 {
-    animation: bounceRight 10s ease-in-out infinite;
+.svgText:nth-of-type(4).animation {
     animation-delay: 0.6s;
 }
-#char5 {
-    animation: bounceRight 10s ease-in-out infinite;
+.svgText:nth-of-type(5).animation {
     animation-delay: 0.8s;
 }
-#char6 {
-    animation: bounceRight 10s ease-in-out infinite;
+.svgText:nth-of-type(6).animation {
     animation-delay: 1s;
 }
-#char7 {
-    animation: bounceRight 10s ease-in-out infinite;
+.svgText:nth-of-type(7).animation {
     animation-delay: 1.2s;
 }
-#char8 {
-    animation: bounceRight 10s ease-in-out infinite;
+.svgText:nth-of-type(8).animation {
     animation-delay: 1.4s;
 }
-#char9 {
-    animation: bounceRight 10s ease-in-out infinite;
+.svgText:nth-of-type(9).animation {
     animation-delay: 1.6s;
 }
-#char10 {
+.svgText:nth-of-type(10).animation {
     animation: extraBounceRight 10s ease-in-out infinite;
     animation-delay: 1.8s;
 }
