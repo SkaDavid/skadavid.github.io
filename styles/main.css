@@ -6,37 +6,61 @@ main{
     border-radius: 10px;
     padding: 20px;
     margin: 0px 10px;
+    counter-reset: article;
 }
 
 
-/* Main */
-    /* edit collection view */
-main svg{
-    cursor: pointer;
-    &:hover{
-        fill:#eb6c18;
-        stroke: #eb6c18;
-    }
+
+/* edit collection view */
+main .cardsHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 main .svgContainer{
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    width: 100%;
+    max-width: 100%;
+    gap: 10px;
+    padding: 10px 10px;
+}
+
+main svg{
+    cursor: pointer;
+    fill: var(--second);
+    stroke: var(--second);
+    transition: 200ms;
+    &:hover{
+        transform: scale(1.1);
+    }
 }
 
 main article{
+    counter-increment: article;
     border: 3px dashed var(--third);
-    padding: 10px;
+    border-radius: 10px;
     margin-top: 10px;
+    h3{
+        font-size: larger;
+        padding: 10px 20px;
+        border-bottom: 2px dashed var(--third);
+        &::before{
+            content: counter(article) ". ";
+        }
+    }
+
+    p{
+        padding: 0px 20px;
+    }
+
+    audio{
+        padding: 20px 0px 0px 20px;
+    }
 }
 
-main .cardsHeader{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+
 
     /* Study mode */
 .studyCollection{

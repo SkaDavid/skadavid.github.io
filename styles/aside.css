@@ -21,8 +21,9 @@ aside{
 .asideHeader svg{
     cursor: pointer;
     stroke: var(--second);
-    &:hover circle{
-        fill: var(--third);
+    transition: 200ms;
+    &:hover{
+        transform: scale(1.1);
     }
 }
 
