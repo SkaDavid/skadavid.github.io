@@ -12,7 +12,7 @@ footer{
     }
 
     button{
-        background-color: var(--first);
+        background-color: var(--third);
         border: 2px solid var(--second);
         border-radius: 5px;
         padding: 10px 5px;
@@ -23,7 +23,7 @@ footer{
         transition: 200ms;
 
         &:hover{
-            background-color: rgb(117, 36, 194);
+            background-color: var(--first);
             box-shadow: 3px 3px 5px var(--first);
         }
     }

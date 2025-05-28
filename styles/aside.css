@@ -20,26 +20,29 @@ aside{
 
 .asideHeader svg{
     cursor: pointer;
+    stroke: var(--second);
+    &:hover circle{
+        fill: var(--third);
+    }
 }
 
-.asideHeader svg:hover circle{
-    fill: #eb6c18;
-}
+ /* Kolekce */
 
 article.aside{
     background-color: var(--third);
     border: 3px solid var(--second);
+    border-radius: 10px;
     width: 90%;
     padding: 0px 10px;
     display: flex;
     justify-content: space-between;
     color: var(--second);
-    border-radius: 15px;
-    box-shadow: 2px 2px 2px 2px rgb(202, 146, 25);
+    box-shadow: 2px 2px 2px 2px var(--third);
     transition: 300ms;
     cursor: pointer;
     &:hover{
-        box-shadow: 4px 4px 3px 3px rgb(222, 160, 40);
+        background-color: rgb(94, 35, 150);
+        box-shadow: 4px 4px 3px 3px rgb(63, 20, 80);
     }
 }
 
@@ -51,7 +54,8 @@ article.aside svg.eye path{
 }
 
 article.aside svg.eye:hover path{
-        stroke:#eb6c18;
+        transform: scale(1.1);
+        transform-origin: center;
     }
 
 
@@ -60,7 +64,7 @@ article.aside svg.bin{
     transition: 300ms;
     cursor: pointer;
     &:hover{
-        fill: #eb6c18;
+        transform: scale(1.1);
     }
 }
 
