@@ -61,7 +61,7 @@ class SoundManager{
         audio.setAttribute("controls", true);
         
         const startButton = document.createElement("button");
-        startButton.innerText = "start";
+        startButton.innerText = "start recording";
         startButton.addEventListener("click", async(e)=>{
             e.preventDefault();
             stream = await navigator.mediaDevices.getUserMedia({audio: true});
@@ -80,23 +80,34 @@ class SoundManager{
                 stream.getTracks().forEach(track => track.stop());
                 this.lastRecorderAudio = audioBlob;
             });
-
             mediaRecorder.start();
+
+            startButton.classList.add("hidden");
+            deleteTrackButton.classList.add("hidden");
+            stopButton.classList.remove("hidden");
         })        
 
         const stopButton = document.createElement("button");
-        stopButton.innerText = "stop";
+        stopButton.innerText = "stop recording";
+        stopButton.classList.add("hidden");
         stopButton.addEventListener("click", (e) => {
             e.preventDefault();
             mediaRecorder.stop();
+
+            stopButton.classList.add("hidden");
+            startButton.classList.remove("hidden");
+            deleteTrackButton.classList.remove("hidden");
         });
 
         const deleteTrackButton = document.createElement("button");
         deleteTrackButton.innerText = "delete message";
+        deleteTrackButton.classList.add("hidden");
         deleteTrackButton.addEventListener("click", (e)=>{
             e.preventDefault();
             audio.src = null;
             this.lastRecorderAudio = null;
+
+            deleteTrackButton.classList.add("hidden");
         })
 
         soundWrapper.append(startButton, stopButton, deleteTrackButton, audio);

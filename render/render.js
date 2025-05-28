@@ -227,12 +227,9 @@ function cardForm(closeFunction, sendFunction, soundManager, cardData = new Card
     nameInput.placeholder = "Card title";
     nameInput.value = cardData.title;
 
-    const errorMessageTitle = document.createElement("p");
-    errorMessageTitle.classList.add("errorMessageTitle", "hidden");
-    errorMessageTitle.innerText = "This title already exists. Please choose unique title.";
-    const errorMessageNullInput = document.createElement("p");
-    errorMessageNullInput.classList.add("errorMessageNullInput", "hidden");
-    errorMessageNullInput.innerText = "Input fields should not be empty.";
+    const labelName = document.createElement("label");
+    labelName.setAttribute("for", "title");
+    labelName.innerText = "Select title of your card:"
 
     const textInput = document.createElement("input");
     textInput.type = "text";
@@ -240,12 +237,24 @@ function cardForm(closeFunction, sendFunction, soundManager, cardData = new Card
     textInput.placeholder = "A title is a name, in this case for a card.";
     textInput.value = cardData.text;
 
-    const text = document.createElement("p");
-    text.innerText = "Select title and text of your card:";
+    const labelText = document.createElement("label");
+    labelText.setAttribute("for", "cardText");
+    labelText.innerText = "Describe the title of your card:"
 
+    const errorMessageTitle = document.createElement("p");
+    errorMessageTitle.classList.add("errorMessageTitle", "hidden");
+    errorMessageTitle.innerText = "This title already exists. Please choose unique title.";
+    const errorMessageNullInput = document.createElement("p");
+    errorMessageNullInput.classList.add("errorMessageNullInput", "hidden");
+    errorMessageNullInput.innerText = "Input fields should not be empty.";
+
+    const p = document.createElement("p");
+    p.innerText = "Add a voice message: *"
+    const warning = document.createElement("p");
+    warning.innerText = "* non mandatory. Voice messages do not get saved, they will diseappear on reload."
     const sound = soundManager.soundControls();
 
-    form.append(cross, text, errorMessageTitle, errorMessageNullInput, nameInput, textInput, submit, sound);
+    form.append(cross, errorMessageTitle, errorMessageNullInput, labelName, nameInput, labelText, textInput, submit, p, sound, warning);
     background.append(form);
     return background;
 }
