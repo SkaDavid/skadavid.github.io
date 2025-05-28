@@ -1,0 +1,123 @@
+@import url("variables.css");
+
+body{
+    display: grid;
+    grid-template-columns: calc(75% - 10px) calc(25% - 10px);
+    grid-template-rows: 10vh auto 10vh;
+    margin: 0;
+    gap: 0px 20px;
+    background-color: var(--third);
+    /* Výběr fontů byl vygenerovaný pomocí chatGPT, nevím si s výběrem nikdy rady... */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    color: var(--second);
+}
+
+header{
+    grid-column: 1 / 3;
+    grid-row: 1 / 2;
+    background-color: var(--third);
+    margin-left: 20px;
+}
+
+
+/* Header and header animation */
+.svgText{
+    font-size: 50px;
+    font-weight: 900;
+    font-family: Arial;
+    fill: var(--first);
+    background-color: var(--third);
+}
+
+.cardLogo{
+    stroke: rgb(10, 1, 1);
+    stroke-width: 1;
+    fill: var(--first);
+}
+
+.cardLogo:nth-of-type(2).animation {
+    transform: translateX(0px) rotate3d(1, 1, 1, 0);
+    transform-origin: 405px;
+    animation: cardSpring 10s ease-in-out infinite;
+    animation-delay: 2s;
+}
+
+@keyframes cardSpring {
+    0% {
+        transform: rotate3d(1, 1, 1, 0deg); 
+    }
+    10% {
+        transform: translateX(300px) rotate3d(3, 2, 5, 270deg);
+        fill: #b4a802;
+    }
+    20%{
+        transform: translateX(0) rotate3d(1, 1, 1, 0deg);
+        fill: var(--first);
+    }
+}
+
+.svgText{
+    stroke: rgb(63, 11, 11);
+    stroke-width: 0.75;
+}
+.svgText.animation{
+    animation: bounceRight 10s ease-in-out infinite;
+}
+
+.svgText:nth-of-type(1).animation {
+    animation-delay: 0s;
+}
+
+.svgText:nth-of-type(2).animation {
+    animation-delay: 0.2s;
+}
+
+.svgText:nth-of-type(3).animation {
+    animation-delay: 0.4s;
+}
+.svgText:nth-of-type(4).animation {
+    animation-delay: 0.6s;
+}
+.svgText:nth-of-type(5).animation {
+    animation-delay: 0.8s;
+}
+.svgText:nth-of-type(6).animation {
+    animation-delay: 1s;
+}
+.svgText:nth-of-type(7).animation {
+    animation-delay: 1.2s;
+}
+.svgText:nth-of-type(8).animation {
+    animation-delay: 1.4s;
+}
+.svgText:nth-of-type(9).animation {
+    animation-delay: 1.6s;
+}
+.svgText:nth-of-type(10).animation {
+    animation: extraBounceRight 10s ease-in-out infinite;
+    animation-delay: 1.8s;
+}
+
+@keyframes bounceRight {
+    0% { 
+        transform: translateX(0); 
+    }
+    5% { 
+        transform: translateX(8px); 
+    }
+    10% { 
+        transform: translateX(0); 
+    }
+}
+
+@keyframes extraBounceRight {
+    0% { 
+        transform: translateX(0); 
+    }
+    5% { 
+        transform: translateX(50px);
+    }
+    10% { 
+        transform: translateX(0); 
+    }
+}

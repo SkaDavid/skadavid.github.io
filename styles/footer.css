@@ -1,0 +1,32 @@
+@import url("variables.css");
+
+footer{
+    grid-column: 1 / 3;
+    background-color: var(--third);
+    display: flex;
+    justify-content: space-between;
+    p{
+        font-size: small;
+        font-style: italic;
+        margin: 20px 10px 0px 10px; 
+    }
+
+    button{
+        background-color: var(--first);
+        border: 2px solid var(--second);
+        border-radius: 5px;
+        padding: 10px 5px;
+        margin: 5px 0px 5px 10px;
+        color: var(--second);
+        font-style: bold;
+        cursor: pointer;
+        transition: 200ms;
+
+        &:hover{
+            background-color: rgb(117, 36, 194);
+            box-shadow: 3px 3px 5px var(--first);
+        }
+    }
+
+}
+
