@@ -40,6 +40,76 @@ addCollection.addEventListener('click', ()=>{
 })
 refreshSidebar();
 
+
+
+
+// drag 'n drop listeners
+    // user can copy a card into different collection by draging it into the sidebar
+function dragCard(e) {
+    const card = e.currentTarget;
+    // remember title and text to copy
+    const h2 = card.querySelector("h3").innerText; 
+    const p = card.querySelector("p").innerText; 
+    const cardDto = {
+        "title": h2,
+        "text": p
+    };
+    // Make string from json
+    e.dataTransfer.setData("application/json", JSON.stringify(cardDto));
+}
+
+    // listener for collections in the sidebar
+function dropCard(e){
+    const data = JSON.parse(e.dataTransfer.getData("application/json"));
+    const collectionName = e.currentTarget.querySelector("h3").innerText;
+    
+    // copy card to selected collection
+    const collection = dataManager.getCollection(collectionName);
+    const success = collection.addCard(new CardsData(data.title, data.text, soundManager.lastRecorderAudio));
+    //check if a card with the same title exists in selected collection
+    if(success){
+        document.querySelector("body").append(printCopyMessage(collection.name, true));
+        dataManager.refreshLocalStorage();
+    } else {
+        document.querySelector("body").append(printCopyMessage(collection.name, false));
+    }
+}
+
+
+// history
+    // Open last page if user clicks page before / after
+window.addEventListener("popstate", e => {
+    const state = e.state;
+    console.log(state);
+    if(state !== null){
+        if(state.mode === "edit"){
+            openEditFromHistory(state.collection);
+        } else if(state.mode === "study"){
+            openStudyFromHistory(state.collection);
+        } else{
+            clearMain();
+        }
+        
+    } 
+})
+
+    // opens study view after user clicks back / forward in history
+function openStudyFromHistory(title){
+    clearMain();
+    const collection = dataManager.getCollection(title);
+    dataManager.currentCollection = collection;
+    refreshStudyView();
+}
+
+    // opens edit view after user clicks back / forward in history
+function openEditFromHistory(title){
+    clearMain();
+    const collection = dataManager.getCollection(title);
+    dataManager.currentCollection = collection;
+    const main = document.querySelector("main");
+    main.append(new Collection(collection.name).renderEditView(removeCardFromCollection, editCard, openCardForm, dragCard, collection));
+}
+
 // Study view
 
     // Opens study view of a collection user selected
@@ -268,72 +338,4 @@ function clearSidebar(){
 function clearMain(){
     const main = document.querySelector("main");
     main.replaceChildren();
-}
-
-
-// drag 'n drop listeners
-    // user can copy a card into different collection by draging it into the sidebar
-function dragCard(e) {
-    const card = e.currentTarget;
-    // remember title and text to copy
-    const h2 = card.querySelector("h3").innerText; 
-    const p = card.querySelector("p").innerText; 
-    const cardDto = {
-        "title": h2,
-        "text": p
-    };
-    // Make string from json
-    e.dataTransfer.setData("application/json", JSON.stringify(cardDto));
-}
-
-    // listener for collections in the sidebar
-function dropCard(e){
-    const data = JSON.parse(e.dataTransfer.getData("application/json"));
-    const collectionName = e.currentTarget.querySelector("h3").innerText;
-    
-    // copy card to selected collection
-    const collection = dataManager.getCollection(collectionName);
-    const success = collection.addCard(new CardsData(data.title, data.text, soundManager.lastRecorderAudio));
-    //check if a card with the same title exists in selected collection
-    if(success){
-        document.querySelector("body").append(printCopyMessage(collection.name, true));
-        dataManager.refreshLocalStorage();
-    } else {
-        document.querySelector("body").append(printCopyMessage(collection.name, false));
-    }
-}
-
-
-// history
-    // Open last page if user clicks page before / after
-window.addEventListener("popstate", e => {
-    const state = e.state;
-    console.log(state);
-    if(state !== null){
-        if(state.mode === "edit"){
-            openEditFromHistory(state.collection);
-        } else if(state.mode === "study"){
-            openStudyFromHistory(state.collection);
-        } else{
-            clearMain();
-        }
-        
-    } 
-})
-
-    // opens study view after user clicks back / forward in history
-function openStudyFromHistory(title){
-    clearMain();
-    const collection = dataManager.getCollection(title);
-    dataManager.currentCollection = collection;
-    refreshStudyView();
-}
-
-    // opens edit view after user clicks back / forward in history
-function openEditFromHistory(title){
-    clearMain();
-    const collection = dataManager.getCollection(title);
-    dataManager.currentCollection = collection;
-    const main = document.querySelector("main");
-    main.append(new Collection(collection.name).renderEditView(removeCardFromCollection, editCard, openCardForm, dragCard, collection));
 }
