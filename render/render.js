@@ -52,6 +52,7 @@ class Collection{
 
         collectionData.cards.forEach(card => {
             const article = document.createElement("article");
+            article.setAttribute("draggable", true);
             article.addEventListener("dragstart", dragCard); 
             article.classList.add("cards");
 
