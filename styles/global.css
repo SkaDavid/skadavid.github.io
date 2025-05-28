@@ -36,8 +36,17 @@ header{
 }
 
 .cardLogo:nth-of-type(2).animation {
+    -webkit-transform: translateX(0px) rotate3d(1, 1, 1, 0);
+    -moz-transform: translateX(0px) rotate3d(1, 1, 1, 0);
+    -ms-transform: translateX(0px) rotate3d(1, 1, 1, 0);
     transform: translateX(0px) rotate3d(1, 1, 1, 0);
+
+    
+    -webkit-transform-origin: 405px;
+    -moz-transform-origin: 405px;
+    -ms-transform-origin: 405px;
     transform-origin: 405px;
+    
     animation: cardSpring 10s ease-in-out infinite;
     animation-delay: 2s;
 }

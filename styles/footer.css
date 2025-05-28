@@ -20,7 +20,10 @@ footer{
         color: var(--second);
         font-style: bold;
         cursor: pointer;
-        transition: 200ms;
+        
+        -webkit-transition: 300ms;
+        -moz-transition: 300ms;
+        transition: 300ms;
 
         &:hover{
             background-color: var(--first);

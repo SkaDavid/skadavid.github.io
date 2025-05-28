@@ -21,6 +21,9 @@ aside{
 .asideHeader svg{
     cursor: pointer;
     stroke: var(--second);
+
+    -webkit-transition: 200ms;
+    -moz-transition: 200ms;
     transition: 200ms;
     &:hover{
         transform: scale(1.1);
@@ -39,6 +42,9 @@ article.aside{
     justify-content: space-between;
     color: var(--second);
     box-shadow: 2px 2px 2px 2px var(--third);
+
+    -webkit-transition: 300ms;
+    -moz-transition: 300ms;
     transition: 300ms;
     cursor: pointer;
     &:hover{
@@ -50,21 +56,34 @@ article.aside{
 
 article.aside svg.eye path{
     stroke: var(--second);
+    -webkit-transition: 300ms;
+    -moz-transition: 300ms;
     transition: 300ms;
-    
 }
 
 article.aside svg.eye:hover path{
-        transform: scale(1.1);
-        transform-origin: center;
-    }
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+
+    -webkit-transform-origin: center;
+    -moz-transform-origin: center;
+    -ms-transform-origin: center;
+    transform-origin: center;
+}
 
 
 article.aside svg.bin{
     fill: var(--second);
+    -webkit-transition: 300ms;
+    -moz-transition: 300ms;
     transition: 300ms;
     cursor: pointer;
     &:hover{
+        -webkit-transform: scale(1.1);
+        -moz-transform: scale(1.1);
+        -ms-transform: scale(1.1);
         transform: scale(1.1);
     }
 }

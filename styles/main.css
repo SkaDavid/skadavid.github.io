@@ -31,8 +31,13 @@ main svg{
     cursor: pointer;
     fill: var(--second);
     stroke: var(--second);
-    transition: 200ms;
+    -webkit-transition: 300ms;
+    -moz-transition: 300ms;
+    transition: 300ms;
     &:hover{
+        -webkit-transform: scale(1.1);
+        -moz-transform: scale(1.1);
+        -ms-transform: scale(1.1);
         transform: scale(1.1);
     }
 }
@@ -82,6 +87,8 @@ main article{
     height: 100%;
     position: relative;
     transform-style: preserve-3d;
+    -webkit-transition: transform 0.6s;
+    -moz-transition: transform 0.6s;
     transition: transform 0.6s;
 }
 
@@ -107,6 +114,9 @@ main article{
     flex-direction: column;
     align-items: center;
     text-align: center;
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -ms-transform: rotateY(180deg);
     transform: rotateY(180deg);
     border: 2px solid var(--third);
     audio{
@@ -116,7 +126,10 @@ main article{
 }
 
 .flipped{
-    transform: rotateY(180deg)
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -ms-transform: rotateY(180deg);
+    transform: rotateY(180deg);
 }
 
 
