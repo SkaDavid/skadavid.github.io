@@ -32,6 +32,18 @@ toggleAnimationButton.addEventListener("click", ()=>{
 
 refreshSidebar();
 
+
+const body = document.querySelector("body");
+const addCollection = document.getElementById("addCollectionButton");
+addCollection.addEventListener('click', ()=>{
+    const form = newCollectionForm(clearFormView, sendNewCollectionForm);
+    body.append(form);
+    document.querySelector("input").focus();
+})
+
+
+// history
+
 window.addEventListener("popstate", e => {
     const state = e.state;
     console.log(state);
@@ -47,17 +59,6 @@ window.addEventListener("popstate", e => {
     } 
 })
 
-const body = document.querySelector("body");
-const addCollection = document.getElementById("addCollectionButton");
-addCollection.addEventListener('click', ()=>{
-    const form = newCollectionForm(clearFormView, sendNewCollectionForm);
-    body.append(form);
-    document.querySelector("input").focus();
-})
-
-
-//TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
-// history
 function openStudyFromHistory(title){
     clearMain();
     const collection = dataManager.getCollection(title);
@@ -188,12 +189,20 @@ function clearFormView(){
 function sendNewCollectionForm(e){
     e.preventDefault();
     const name = e.target[0].value;
+    const errorMessageNullInput = e.currentTarget.querySelector(".errorMessageNullInput");
+    const errorMessage = e.currentTarget.querySelector(".errorMessageTitle");
+    errorMessage.classList.add("hidden");
+    if(name.length === 0){
+        errorMessageNullInput.classList.remove("hidden");
+        return;
+    } else{
+        errorMessageNullInput.classList.add("hidden");
+    }
     const collection = new CollectionData(name);
     if(dataManager.addCollection(collection)){
         clearFormView();
         refreshSidebar();
     } else{
-        const errorMessage = e.currentTarget.querySelector(".errorMessageTitle");
         errorMessage.classList.remove("hidden");
     };
 }
@@ -207,7 +216,7 @@ function deleteCollection(e){
     clearMain();
 }
 
-//TODOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
+
 function openEditCollectionView(e){
     e.stopPropagation();
     clearMain();
