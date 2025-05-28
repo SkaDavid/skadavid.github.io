@@ -13,7 +13,7 @@ class SoundManager{
         this.soundActive = true;
         this.prevCard = new Audio("./sound/prevCard.wav");
         this.nextCard = new Audio("./sound/nextCard.wav");
-        this.turnOver = new Audio("./sound/turnover.wav");
+        this.turnOver = new Audio("./sound/turnOver.wav");
     }
 
     // play a sound when user turns over a card in study mode
