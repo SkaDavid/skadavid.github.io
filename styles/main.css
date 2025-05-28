@@ -155,17 +155,3 @@ main .controlsContainer{
     background-color: greenyellow;
 }
 
-    /* Form validation */ 
-.error{
-    background-color: #ff5549;
-}
-
-
-.errorMessageTitle, .errorMessageNullInput{
-    background-color: red;
-
-}
-
-.hidden{
-    visibility: collapse;
-}

@@ -289,9 +289,9 @@ const svgRepo = {
                     <path class="bin" d="M21,37V19a2,2,0,0,0-4,0V37a2,2,0,0,0,4,0Z"/><path d="M31,37V19a2,2,0,0,0-4,0V37a2,2,0,0,0,4,0Z"/>
                 </svg>`,
     cross: `<svg width="35px" height="35px" id="cross" viewBox="0 0 100 100">
-                <circle rx"48" cx="50" cy="50" fill="none" stroke="black" stroke-width="5"></circle>
-                <line x1="30" y1="30" x2="70" y2="70" stroke="black" stroke-width="5px"></line>
-                <line x1="30" y1="70" x2="70" y2="30" stroke="black" stroke-width="5px"></line>
+                <circle rx"48" cx="50" cy="50" fill="none"  stroke-width="5"></circle>
+                <line x1="30" y1="30" x2="70" y2="70" stroke-width="5px"></line>
+                <line x1="30" y1="70" x2="70" y2="30" stroke-width="5px"></line>
             </svg>`,
     plus: `<svg width="35px" height="35px" id="addCollectionButton" viewBox="0 0 100 100">
                 <circle r="48" cx="50" cy="50" fill="none" stroke-width="5"></circle>
