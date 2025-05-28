@@ -25,6 +25,7 @@ class SoundManager{
             this.prevCard.pause();
             this.prevCard.currentTime = 0;
             this.prevCard.playbackRate = 2;
+            this.prevCard.volume = 0.2;
             this.prevCard.play();
         }
     }
@@ -34,6 +35,7 @@ class SoundManager{
             this.nextCard.pause();
             this.nextCard.currentTime = 0;
             this.nextCard.playbackRate = 2;
+            this.nextCard.volume = 0.2;
             this.nextCard.play();
         }
     }
