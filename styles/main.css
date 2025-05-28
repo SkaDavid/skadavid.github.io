@@ -138,6 +138,10 @@ main .controlsContainer{
     margin-top: 50px;
     gap: 70px;
 }
+
+main .svgContainer{
+    fill: var(--second);
+}
 /* temporary error messages */
     /* copy after dragndrop */
 .copyMessage{
