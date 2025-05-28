@@ -1,8 +1,12 @@
+
+// Takes care of everything related to sound on the page.
 class SoundManager{
+    // true or false based on user preferences
     soundActive;
     prevCard;
     nextCard;
     turnOver;
+    // last recorded audio user recorded
     lastRecorderAudio;
     
     constructor(){
@@ -12,7 +16,9 @@ class SoundManager{
         this.turnOver = new Audio("./sound/turnover.wav");
     }
 
+    // play a sound when user turns over a card in study mode
     turnOverSound(){
+        // check for user preferences
         if(this.soundActive){
             this.turnOver.pause();
             this.turnOver.currentTime = 0;
@@ -20,7 +26,9 @@ class SoundManager{
         }
     }   
     
+    // play a sound when user checks previous card
     prevCardSound(){
+        // check for user preferences
         if(this.soundActive){
             this.prevCard.pause();
             this.prevCard.currentTime = 0;
@@ -30,7 +38,9 @@ class SoundManager{
         }
     }
 
+    // play a sound when user checks the next card
     nextCardSound(){
+        // check for user preferences
         if(this.soundActive){
             this.nextCard.pause();
             this.nextCard.currentTime = 0;
@@ -40,6 +50,7 @@ class SoundManager{
         }
     }
 
+    // function which turns off / turns on the sound
     toggleSound(){
         this.soundActive = this.soundActive ? false : true;
     }
@@ -48,9 +59,11 @@ class SoundManager{
         return this.soundActive;
     }
 
+    // renders an element where user can record his own voice message
     soundControls(){        
         const soundWrapper = document.createElement("div");
         soundWrapper.classList.add("soundWrapper");
+        // null the last record audio each time new sound controls are generated
         this.lastRecorderAudio = null;
         
         let mediaRecorder;
@@ -81,7 +94,8 @@ class SoundManager{
                 this.lastRecorderAudio = audioBlob;
             });
             mediaRecorder.start();
-
+    
+            // deactivate the start and delete button and show a button which will stop the recording stream
             startButton.classList.add("hidden");
             deleteTrackButton.classList.add("hidden");
             stopButton.classList.remove("hidden");
@@ -94,6 +108,7 @@ class SoundManager{
             e.preventDefault();
             mediaRecorder.stop();
 
+            // deactivate the stop button and show both start button and delete message button
             stopButton.classList.add("hidden");
             startButton.classList.remove("hidden");
             deleteTrackButton.classList.remove("hidden");
@@ -107,6 +122,7 @@ class SoundManager{
             audio.src = null;
             this.lastRecorderAudio = null;
 
+            // Hide the delete button (as there is now nothing to be deleted)
             deleteTrackButton.classList.add("hidden");
         })
 

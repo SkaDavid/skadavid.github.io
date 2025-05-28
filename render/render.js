@@ -6,11 +6,14 @@ class Collection{
         this.title = title;
     }
 
-    render(deleteFunction, lookFunction, openFunction, dropCard){
+    // Renders a collection article to the aside element.
+    // takes in a list of functions, which should be appended as listeners to various elements
+    renderAsideCollections(deleteFunction, lookFunction, openFunction, dropCard){
         const article = document.createElement("article");
         article.classList.add("aside");
+        // add listeners for drag n drop features
         article.addEventListener("dragover", e => {
-            e.preventDefault(); // TODO
+            e.preventDefault(); 
         });
         article.addEventListener("drop", dropCard);
         const header = document.createElement("h3");
@@ -19,18 +22,23 @@ class Collection{
         div.classList.add("svgDivide");
 
         const binSvg = getSVG("bin");
+        // add listener for deleting this collectiom
         binSvg.addEventListener('click', deleteFunction, false);
 
         const eyeSvg = getSVG("eye");
+        // add listener for rendering edit view of this collectiom
         eyeSvg.addEventListener("click", lookFunction, false);
         
         div.append(binSvg, eyeSvg);
         article.append(header, div);
+        // add listener for rendering study view of this collectiom
         article.addEventListener("click", openFunction, false);
         return article;
     }
 
-    renderCards(deleteCard, editCard, addCard, dragCard, collectionData){
+    // renders edit view of a selected collection. 
+    // Takes in collection data as data, which should be rendered and various functions which should be appended as listeners.
+    renderEditView(deleteCard, editCard, addCard, dragCard, collectionData){
         const section = document.createElement("section");
         section.classList.add("cardsContainer");
 
@@ -40,18 +48,22 @@ class Collection{
         const h2 = document.createElement("h2");
         h2.innerText = collectionData.name;
         const plus = getSVG("plus");
+        // add listener for rendering form to add a new card
         plus.addEventListener('click', addCard);
         
         div.append(h2, plus);
         section.append(div);
 
+        // check if there are any cards in current collection. If not, render a warning.
         if(collectionData.cards.length === 0){
             section.append(renderMissingCards());
             return section;
         }
 
+        // Render an article for each card in collection
         collectionData.cards.forEach(card => {
             const article = document.createElement("article");
+            // add drag n drop features
             article.setAttribute("draggable", true);
             article.addEventListener("dragstart", dragCard); 
             article.classList.add("cards");
@@ -61,6 +73,7 @@ class Collection{
             const p = document.createElement("p");
             p.innerText = card.text;
 
+            // check if card has an audio message. If so, render audio controls
             let audio;
             if(card.audio){
                 const audioURL = URL.createObjectURL(card.audio);
@@ -72,12 +85,15 @@ class Collection{
             svgContainer.classList.add("svgContainer");
 
             const pencil = getSVG("pencil");
+            // add listener for rendering a form to edit card
             pencil.addEventListener("click", editCard);
 
             const bin = getSVG("bin");
+            // add listener to delete a card
             bin.addEventListener("click", deleteCard);
 
             svgContainer.append(pencil, bin);
+            // render or do not render audio controls
             if(card.audio){
                 article.append(h3, p, audio, svgContainer);
             } else{
@@ -88,12 +104,16 @@ class Collection{
         return section;
     }
 
-    renderStudyMode(collectionData, nextCard, previousCard, turnOver){
+    // renders a study viw of selected collection
+    // Takes in collectionData of collection that should be rendered and functions for navigating between cards
+    renderStudyView(collectionData, nextCard, previousCard, turnOver){
+        // check if collection is empty. If so, render a warning
         if(collectionData.cards.length === 0){
             const section = document.createElement("section");
             section.append(renderMissingCards());
             return section;
         }
+        // render current card
         const section = document.createElement("section");
         section.classList.add("studyCollection");
         const h2 = document.createElement("h2");
@@ -120,6 +140,7 @@ class Collection{
         p.innerText = currentCard.text;
         p.setAttribute("id", "backPage");
         let audio;
+        // check if current card has audio. if so, render audio controls
         if(currentCard.audio){
             const audioURL = URL.createObjectURL(currentCard.audio);
             audio = new Audio(audioURL);
@@ -137,12 +158,16 @@ class Collection{
         studyContainer.append(card);
 
 
+        // append listener functions for navigating betewen cards
         const svgContainer = document.createElement("div");
         svgContainer.classList.add("controlsContainer");
         const arrowRight = getSVG("arrowRight"); 
+        // add listener to open next card
         arrowRight.addEventListener("click", nextCard);
-        const arrowLeft = getSVG("arrowLeft"); 
+        const arrowLeft = getSVG("arrowLeft");
+        // add listener to open previous card 
         arrowLeft.addEventListener("click", previousCard);
+        // add listener to turn over current card
         const turnOverSvg = getSVG("turnOver"); 
         turnOverSvg.addEventListener("click", turnOver);
 
@@ -151,37 +176,41 @@ class Collection{
 
         return section;
     }
-
-
 }
 
-function renderMissingCollection(){
+// render a warning of missing collections
+function renderMissingCollections(){
     const p = document.createElement("p");
     p.innerText = "It seems like you have no collections yet. Click on the plus sign to create one!";
     return p;
 }
 
+// render a warning of missing cards
 function renderMissingCards(){
         const p = document.createElement("p");
         p.innerText = "It seems there are no cards in this collection. Add some by clicking the plus sign in the edit page of the collection.";
         return p;
 }
 
+// render a form for adding a new collection to list of collections. Takes in listeners for navigating the form.
 function newCollectionForm(closeFunction, sendFunction){
     const background = document.createElement('div');
     background.setAttribute("id", "darkerBackground");
 
     const form = document.createElement("form");
     form.setAttribute("id", "collectionForm");
+    // add a listener to submit/validate the form
     form.addEventListener('submit', sendFunction);
     
     const cross = getSVG("cross");
+    // add a listener to close the form
     cross.addEventListener('click', closeFunction);
 
     const submit = document.createElement("input");
     submit.setAttribute("type", "submit");
     submit.value = "Create!";
 
+    // generate validating error messages. These are by default hidden.
     const errorMessageTitle = document.createElement("p");
     errorMessageTitle.classList.add("errorMessageTitle", "hidden");
     errorMessageTitle.innerText = "This title already exists. Please choose unique title.";
@@ -202,6 +231,8 @@ function newCollectionForm(closeFunction, sendFunction){
     return background;
 }
 
+// render a form for editing/adding new card. 
+// takes in functions for navigating the form, as well as cardData. If cardData are sent, then user wants to edit card sent in newData. Else user wants to add new card to collection.
 function cardForm(closeFunction, sendFunction, soundManager, cardData = new CardsData("", "", null)){
     const background = document.createElement('div');
     background.setAttribute("id", "darkerBackground");
@@ -215,12 +246,14 @@ function cardForm(closeFunction, sendFunction, soundManager, cardData = new Card
 
     const submit = document.createElement("input");
     submit.setAttribute("type", "submit");
+    // Check if user wants to add or edit a card
     if(cardData.title === ""){
         submit.value = "Create!"
     } else{
         submit.value = "Edit!";
     }
 
+    // create form elements
     const nameInput = document.createElement("input");
     nameInput.type = "text";
     nameInput.key = "title";
@@ -241,6 +274,7 @@ function cardForm(closeFunction, sendFunction, soundManager, cardData = new Card
     labelText.setAttribute("for", "cardText");
     labelText.innerText = "Describe the title of your card:"
 
+    // render validating error messages. These are hidden by default.
     const errorMessageTitle = document.createElement("p");
     errorMessageTitle.classList.add("errorMessageTitle", "hidden");
     errorMessageTitle.innerText = "This title already exists. Please choose unique title.";
@@ -259,6 +293,8 @@ function cardForm(closeFunction, sendFunction, soundManager, cardData = new Card
     return background;
 }
 
+// Shows a message when user attempts to copy a card to different collection via drag n drop.
+// Takes in a name of collection user wants to copy a card to, success indicates wether a successfull or unsuccesfull message should be shown
 function printCopyMessage(name, success){
     const div = document.createElement("div");
     div.classList.add("copyMessage");
@@ -279,7 +315,10 @@ function printCopyMessage(name, success){
 }
 
 
-export {Collection, renderMissingCollection, cardForm, newCollectionForm, printCopyMessage}
+export {Collection, renderMissingCollections, cardForm, newCollectionForm, printCopyMessage}
+
+
+// Helper function to render one of many SVGs on the page.
 
 function getSVG(name){
     const svg = svgRepo[name];
@@ -328,4 +367,3 @@ const svgRepo = {
                 <path d="M10.75 18C10.75 18.3034 10.5673 18.5768 10.287 18.6929C10.0068 18.809 9.68417 18.7449 9.46967 18.5304L3.46967 12.5304C3.32902 12.3897 3.25 12.1989 3.25 12C3.25 11.8011 3.32902 11.6103 3.46967 11.4697L9.46967 5.46969C9.68417 5.25519 10.0068 5.19103 10.287 5.30711C10.5673 5.4232 10.75 5.69668 10.75 6.00002V18Z" fill="#1C274C"/>
             </svg>`
 }
-

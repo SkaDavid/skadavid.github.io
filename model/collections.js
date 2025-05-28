@@ -1,12 +1,17 @@
+//CollectionManager holds information about every collection that is in use. 
 class CollectionManager{
+    // a list of all collections
     collections;
+    // last collection in use
     currentCollection;
+    // last card in use
     currentCard;
     constructor(){
         this.collections = [];
         this.initializeFromLocalStorage();
     }
 
+    // initialize the apps state from local storage
     initializeFromLocalStorage(){
         if(localStorage.collections){
             const collectionsPlainObjects = JSON.parse(localStorage.collections);
@@ -21,6 +26,7 @@ class CollectionManager{
         }
     }
 
+    // Refreshes every change into local storage
     refreshLocalStorage(){
         if(this.collections.length === 0){
             localStorage.clear();
@@ -30,7 +36,9 @@ class CollectionManager{
         }
     }
 
+    // Add collection to list of collections. Returns true if successfull, false if unsuccesfull.
     addCollection(collection){
+        // check if collections name is unique across all collections
         let collision = false;
         if(this.collections.length !== 0){
             this.collections.forEach(element => {
@@ -40,6 +48,7 @@ class CollectionManager{
                 }
             });
         }
+        // if name is unique, add collection to list and return true
         if(!collision){
             this.collections.push(collection);
             this.refreshLocalStorage();
@@ -49,6 +58,7 @@ class CollectionManager{
         }
     }
 
+    // removes collection from the list of all collections
     removeCollection(name){
         let index = -1;
         for(let i = 0; i < this.collections.length; i++){
@@ -67,8 +77,9 @@ class CollectionManager{
         return this.collections;
     }
 
+    // returns collection based on its name. Returns CollectionData if found, false if not.
     getCollection(name){
-        let returnC = -1;
+        let returnC = false;
         if(this.collections.length > 0){
             this.collections.forEach(collection => {
             if(collection.name === name){
@@ -106,9 +117,13 @@ class CollectionManager{
 
 }
 
+// Holds information about a single collection.
 class CollectionData{
+    // name of the collection
     name;
+    // A list of cards
     cards;
+    // index of last recently used card
     currentIndex;
     constructor(name, cards = [], currentIndex = 0){
         this.name = name;
@@ -148,6 +163,7 @@ class CollectionData{
         return this.cards[this.currentIndex];
     }
 
+    // adds a card with unique title to collection. Returns true if succesfull, false if unsuccesfull
     addCard(card){
         let index = this.findCardIndex(card.title);
         if(index === -1){
@@ -173,6 +189,7 @@ class CollectionData{
         return index;
     }
 
+    // Finds card by index. Returns index if found, -1 if not found
     findCardIndex(title){
         let index = -1;
         for(let i = 0; i < this.cards.length; i++){
@@ -185,6 +202,7 @@ class CollectionData{
     }
 }
 
+// Holds information about a single card
 class CardsData{
     title;
     text;
